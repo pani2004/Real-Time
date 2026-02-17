@@ -30,7 +30,9 @@ export const PollView: React.FC = () => {
     try {
       setLoading(true);
       setError(null);
+      console.log('Fetching poll:', pollId);
       const data = await getPoll(pollId);
+      console.log('Poll data received:', data);
       setPoll(data);
       
       // Check if user has voted before (stored in localStorage)
@@ -40,10 +42,11 @@ export const PollView: React.FC = () => {
         setSelectedOption(votedPolls[pollId]);
       }
     } catch (err: any) {
+      console.error('Error fetching poll:', err);
       if (err.response?.status === 404) {
         setError('Poll not found');
       } else {
-        setError('Failed to load poll. Please try again.');
+        setError(err.message || 'Failed to load poll. Please try again.');
       }
     } finally {
       setLoading(false);
@@ -112,8 +115,8 @@ export const PollView: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
-        <Card className="max-w-md">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <Card variant="glass" className="max-w-md">
           <LoadingSpinner text="Loading poll..." />
         </Card>
       </div>
@@ -122,8 +125,8 @@ export const PollView: React.FC = () => {
 
   if (error && !poll) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center px-4">
-        <Card className="max-w-md w-full">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center px-4">
+        <Card variant="glass" className="max-w-md w-full">
           <div className="text-center space-y-4">
             <ErrorMessage message={error} onRetry={fetchPoll} />
             <Button onClick={() => navigate('/')} variant="outline" className="w-full">
