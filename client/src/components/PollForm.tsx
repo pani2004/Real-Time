@@ -30,7 +30,7 @@ const OptionInput: React.FC<OptionInputProps> = ({
           type="button"
           variant="outline"
           onClick={onRemove}
-          className="px-3 text-red-600 border-red-600 hover:bg-red-50"
+          className="px-3 text-red-400 border-red-500 hover:bg-red-900/30"
         >
           ✕
         </Button>
@@ -105,7 +105,7 @@ export const PollForm: React.FC<PollFormProps> = ({ onSubmit, isLoading }) => {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-3">
+        <label className="block text-sm font-medium text-gray-200 mb-3">
           Options
         </label>
         <div className="space-y-3">
@@ -121,7 +121,7 @@ export const PollForm: React.FC<PollFormProps> = ({ onSubmit, isLoading }) => {
           ))}
         </div>
         {errors.options && (
-          <p className="mt-2 text-sm text-red-600">{errors.options}</p>
+          <p className="mt-2 text-sm text-red-400">{errors.options}</p>
         )}
         {options.length < 10 && (
           <Button
@@ -133,7 +133,7 @@ export const PollForm: React.FC<PollFormProps> = ({ onSubmit, isLoading }) => {
             + Add Option
           </Button>
         )}
-        <p className="mt-2 text-xs text-gray-500">
+        <p className="mt-2 text-xs text-gray-300">
           {options.length}/10 options
         </p>
       </div>

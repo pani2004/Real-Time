@@ -65,7 +65,7 @@ export const CreatePoll: React.FC = () => {
           <h1 className="text-5xl font-extrabold bg-gradient-to-r from-purple-400 via-fuchsia-400 to-pink-400 bg-clip-text text-transparent mb-4 drop-shadow-lg">
             Create a Poll
           </h1>
-          <p className="text-gray-700 text-lg font-medium">
+          <p className="text-gray-200 text-lg font-medium">
             ✨ Create engaging polls and share instantly with anyone
           </p>
         </div>
@@ -105,13 +105,13 @@ export const CreatePoll: React.FC = () => {
                   <h2 className="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-green-400 bg-clip-text text-transparent mb-4 drop-shadow-lg">
                   Poll Created Successfully! 🎉
                 </h2>
-                <p className="text-gray-700 text-lg">
+                <p className="text-gray-200 text-lg">
                   Share this link with anyone to collect votes
                 </p>
               </div>
 
-              <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl p-5 border-2 border-purple-200">
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <div className="bg-gradient-to-br from-purple-900/80 to-blue-900/80 rounded-xl p-5 border-2 border-purple-500">
+                <label className="block text-sm font-semibold text-gray-200 mb-2">
                   📎 Your Shareable Link
                 </label>
                 <div className="flex items-center gap-3">

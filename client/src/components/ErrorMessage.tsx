@@ -7,10 +7,10 @@ interface ErrorMessageProps {
 
 export const ErrorMessage: React.FC<ErrorMessageProps> = ({ message, onRetry }) => {
   return (
-    <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+    <div className="bg-red-900/80 border-2 border-red-500 rounded-lg p-4">
       <div className="flex items-start">
         <svg
-          className="h-5 w-5 text-red-600 mt-0.5"
+          className="h-5 w-5 text-red-400 mt-0.5"
           fill="currentColor"
           viewBox="0 0 20 20"
         >
@@ -21,11 +21,11 @@ export const ErrorMessage: React.FC<ErrorMessageProps> = ({ message, onRetry }) 
           />
         </svg>
         <div className="ml-3 flex-1">
-          <p className="text-sm text-red-800">{message}</p>
+          <p className="text-sm text-red-100">{message}</p>
           {onRetry && (
             <button
               onClick={onRetry}
-              className="mt-2 text-sm font-medium text-red-600 hover:text-red-500"
+              className="mt-2 text-sm font-medium text-red-300 hover:text-red-200"
             >
               Try again
             </button>
