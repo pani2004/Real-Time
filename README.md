@@ -380,68 +380,6 @@ Body: {
 Response: Vote result with updated poll data
 ```
 
-## 🚢 Deployment (Render)
 
-### Backend Deployment
-
-1. **Create PostgreSQL database on Render**
-   - Add PostgreSQL service
-   - Copy internal database URL
-
-2. **Create Web Service for backend**
-   - Connect GitHub repository
-   - Build Command: `npm install && npx prisma generate && npx prisma migrate deploy && npm run build`
-   - Start Command: `node dist/index.js`
-   - Environment Variables:
-     - `DATABASE_URL`: (from Render PostgreSQL)
-     - `FRONTEND_URL`: (deployed frontend URL)
-     - `NODE_ENV`: `production`
-
-### Frontend Deployment
-
-1. **Create Static Site on Render**
-   - Connect GitHub repository
-   - Build Command: `npm install && npm run build`
-   - Publish Directory: `dist`
-   - Environment Variables:
-     - `VITE_API_URL`: (deployed backend URL)
-     - `VITE_WS_URL`: (deployed backend URL)
-
-2. **Add Rewrite Rules** (for SPA routing)
-   - Source: `/*`
-   - Destination: `/index.html`
-   - Action: `Rewrite`
-
-## 📝 Testing with Postman
-
-Import the collection: `backend/Polling-App.postman_collection.json`
-
-The collection includes:
-- Health Check
-- Create Poll (auto-saves poll ID)
-- Get Poll
-- Vote on Poll
-- Vote with Different User
-- Change Vote
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch: `git checkout -b feature-name`
-3. Commit changes: `git commit -am 'Add feature'`
-4. Push to branch: `git push origin feature-name`
-5. Submit Pull Request
-
-## 📄 License
-
-MIT License - feel free to use for learning or commercial projects
-
-## 👤 Author
-
-[Your Name]
-- GitHub: [Your GitHub Profile]
-- Email: [Your Email]
-
----
 
 **Built with ❤️ using React, TypeScript, Express, Socket.io, and PostgreSQL**
