@@ -1,0 +1,200 @@
+{
+  "info": {
+    "name": "Real-Time Polling App",
+    "_postman_id": "polling-app-collection",
+    "description": "API endpoints for the real-time polling application with Socket.io",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "health"]
+        },
+        "description": "Check if the server is running"
+      },
+      "response": []
+    },
+    {
+      "name": "Create Poll",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Save poll ID from response",
+              "if (pm.response.code === 201) {",
+              "    var jsonData = pm.response.json();",
+              "    pm.collectionVariables.set('pollId', jsonData.id);",
+              "    pm.collectionVariables.set('optionId', jsonData.options[0].id);",
+              "    console.log('Poll ID saved:', jsonData.id);",
+              "    console.log('First Option ID saved:', jsonData.options[0].id);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"question\": \"What's your favorite programming language?\",\n  \"options\": [\"JavaScript\", \"Python\", \"Java\", \"Go\", \"Rust\"]\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/polls",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "polls"]
+        },
+        "description": "Create a new poll with a question and multiple options (min 2, max 10)"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Poll by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/polls/{{pollId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "polls", "{{pollId}}"]
+        },
+        "description": "Get poll details including all options and current vote counts. Replace {{pollId}} with actual poll ID from Create Poll response."
+      },
+      "response": []
+    },
+    {
+      "name": "Vote on Poll",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "// Generate a random voter fingerprint if not set",
+              "if (!pm.collectionVariables.get('voterFingerprint')) {",
+              "    const fingerprint = 'voter-' + Math.random().toString(36).substring(2, 15);",
+              "    pm.collectionVariables.set('voterFingerprint', fingerprint);",
+              "    console.log('Generated voter fingerprint:', fingerprint);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"optionId\": {{optionId}},\n  \"voterFingerprint\": \"{{voterFingerprint}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/polls/{{pollId}}/vote",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "polls", "{{pollId}}", "vote"]
+        },
+        "description": "Submit a vote for a poll option. Use the optionId from the poll details. Voters can change their vote by submitting again with the same fingerprint."
+      },
+      "response": []
+    },
+    {
+      "name": "Vote on Poll (Different User)",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "// Generate a different voter fingerprint for testing",
+              "const fingerprint = 'voter-' + Math.random().toString(36).substring(2, 15);",
+              "pm.variables.set('differentVoter', fingerprint);",
+              "console.log('Generated different voter:', fingerprint);"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"optionId\": {{optionId}},\n  \"voterFingerprint\": \"{{differentVoter}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/polls/{{pollId}}/vote",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "polls", "{{pollId}}", "vote"]
+        },
+        "description": "Submit a vote as a different user to test multiple votes on the same poll"
+      },
+      "response": []
+    },
+    {
+      "name": "Change Vote (Same User)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"optionId\": 2,\n  \"voterFingerprint\": \"{{voterFingerprint}}\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/polls/{{pollId}}/vote",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "polls", "{{pollId}}", "vote"]
+        },
+        "description": "Test changing vote - same fingerprint voting for a different option. Response should show 'updated: true'"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "pollId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "optionId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "voterFingerprint",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
