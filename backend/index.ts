@@ -56,7 +56,7 @@ io.on('connection', (socket) => {
 
 app.use('/api/polls', pollRoutes);
 
-app.get('/api/health', (req, res) => {
+app.get('/api/health', (req: any, res: any) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 

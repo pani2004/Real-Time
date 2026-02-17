@@ -14,15 +14,15 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "tsx": "^4.21.0"
+  },
+  "dependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^25.2.3",
     "@types/pg": "^8.16.0",
     "prisma": "^7.4.0",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
-  },
-  "dependencies": {
+    "typescript": "^5.9.3",
     "@prisma/adapter-pg": "^7.4.0",
     "@prisma/client": "^7.4.0",
     "cors": "^2.8.5",

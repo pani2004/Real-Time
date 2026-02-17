@@ -87,13 +87,13 @@ export const getPoll = async (req: Request, res: Response) => {
     // Calculate vote counts per option
     const pollWithCounts = {
       ...poll,
-      options: poll.options.map((option) => ({
+      options: poll.options.map((option: any) => ({
         id: option.id,
         text: option.text,
         order: option.order,
         voteCount: option.votes.length,
       })),
-      totalVotes: poll.options.reduce((sum: number, opt) => sum + opt.votes.length, 0),
+      totalVotes: poll.options.reduce((sum: number, opt: any) => sum + opt.votes.length, 0),
     };
 
     res.json(pollWithCounts);
@@ -132,7 +132,7 @@ export const voteOnPoll = async (req: Request, res: Response) => {
     }
 
     // Check if option exists in this poll
-    const optionExists = poll.options.some((opt) => opt.id === optionId);
+    const optionExists = poll.options.some((opt: any) => opt.id === optionId);
     if (!optionExists) {
       return res.status(400).json({ error: 'Invalid option ID for this poll' });
     }
@@ -185,13 +185,13 @@ export const voteOnPoll = async (req: Request, res: Response) => {
     if (updatedPoll) {
       const pollData = {
         ...updatedPoll,
-        options: updatedPoll.options.map((option) => ({
+        options: updatedPoll.options.map((option: any) => ({
           id: option.id,
           text: option.text,
           order: option.order,
           voteCount: option.votes.length,
         })),
-        totalVotes: updatedPoll.options.reduce((sum: number, opt) => sum + opt.votes.length, 0),
+        totalVotes: updatedPoll.options.reduce((sum: number, opt: any) => sum + opt.votes.length, 0),
       };
 
       // Emit real-time update to all connected clients
