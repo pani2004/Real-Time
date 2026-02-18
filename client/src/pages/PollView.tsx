@@ -12,6 +12,7 @@ import type { Poll } from '../types/poll.types';
 
 export const PollView: React.FC = () => {
   const { pollId } = useParams<{ pollId: string }>();
+  console.log('PollView rendered, pollId:', pollId); 
   const navigate = useNavigate();
   const socket = useSocket();
 
